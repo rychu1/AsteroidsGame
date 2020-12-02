@@ -1,25 +1,26 @@
-Spaceship one = new Spaceship();
+Spaceship wee = new Spaceship();
+ArrayList <Asteroid> rocks = new ArrayList <Asteroid>();
 Star[] nightsky = new Star[200];
 public void keyPressed() 
    {
      if(key == 'r') 
      {
-       one.setXspeed(0);
-       one.setYspeed(0);
-       one.setCenterX((int)(Math.random()*1000));
-       one.setCenterY((int)(Math.random()*1000));
+       wee.setXspeed(0);
+       wee.setYspeed(0);
+       wee.setCenterX((Math.random()*1000));
+       wee.setCenterY((Math.random()*1000));
      }
      if(key == 'a')
      {
-       one.turn(-10);
+       wee.turn(-10);
      }
      if(key == 'd')
      {
-       one.turn(10);
+       wee.turn(10);
      }
-     if(key == 'q')
+     if(key == 'w')
      {
-       one.accelerate(1);
+       wee.accelerate(0.5);
      }
    }
 public void setup() 
@@ -30,14 +31,29 @@ public void setup()
   {
     nightsky[i] = new Star();
   }
+  for(int i = 0; i< 10; i++)
+  {
+    Asteroid rock = new Asteroid();
+    rocks.add(rock);
+  }
 }
 public void draw() 
 {
   background(0);
-  one.show();
-  one.move();
+  wee.show();
+  wee.move();
   for(int i = 0; i<nightsky.length; i++)
   {
     nightsky[i].show();
+  }
+  for (int i = 0; i < rocks.size(); i++)
+  {
+    rocks.get(i).move();
+    rocks.get(i).show();
+    float d = dist((float)wee.getX(),(float) wee.getY(), (float)rocks.get(i).getX(), (float)rocks.get(i).getY());
+    if (d<25)
+    {
+      rocks.remove(i);
+    }
   }
 }
