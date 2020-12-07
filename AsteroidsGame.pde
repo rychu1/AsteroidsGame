@@ -1,6 +1,7 @@
 Spaceship wee = new Spaceship();
 ArrayList <Asteroid> rocks = new ArrayList <Asteroid>();
 Star[] nightsky = new Star[200];
+ArrayList <Bullet> shoot = new ArrayList <Bullet>();
 public void keyPressed() 
    {
      if(key == 'r') 
@@ -21,6 +22,11 @@ public void keyPressed()
      if(key == 'w')
      {
        wee.accelerate(0.5);
+     }
+     if(key == 'f')
+     {
+       Bullet laser = new Bullet(wee);
+       shoot.add(laser);
      }
    }
 public void setup() 
@@ -54,6 +60,24 @@ public void draw()
     if (d<25)
     {
       rocks.remove(i);
+    }
+  }
+  for (int i = 0; i < shoot.size(); i++)
+  {
+    shoot.get(i).move();
+    shoot.get(i).show();
+  }
+  for (int i = 0; i < shoot.size(); i++)
+  {
+    for (int j = 0; j < rocks.size(); j++)
+    {
+      float f = dist((float)shoot.get(i).getX(), (float)shoot.get(i).getY(), (float)rocks.get(j).getX(), (float)rocks.get(j).getY());
+      if (f<50)
+      {
+        rocks.remove(j);
+        shoot.remove(i);
+        break;
+      }
     }
   }
 }
